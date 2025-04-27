@@ -47,7 +47,7 @@ const getSimilarMovies = async(req, res) => {
     const data = await fetchFromTMDB(`https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`)
     res.status(200).json({ success: true, similar: data.results })
 } catch (error) {
-    console.log("Error in the getMovieDetails function: ", error.message)
+    console.log("Error in the getSimilarMovies function: ", error.message)
     res.status(500).json({ success: false, message: "Internal Server Error" })   
   }
 } 
@@ -58,7 +58,8 @@ const getMoviesByCategory = async(req, res) => {
     const data = await fetchFromTMDB(`https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`)
     res.status(200).json({ success: true, content: data.results })
   } catch (error) {
-    
+    console.log("Error in the getMoviesByCategory function: ", error.message)
+    res.status(500).json({ success: false, message: "Internal Server Error" })   
   }
 }
 
