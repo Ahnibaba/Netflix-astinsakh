@@ -10,7 +10,7 @@ import MovieSlider from '../../components/MovieSlider'
 
 
 const HomeScreen = () => {
-  const { trendingContent, trendingContentLoading } = useGetTrendingContent()
+  const { trendingContent } = useGetTrendingContent()
   const { contentType } = useContentStore()
 
   console.log(trendingContent);
@@ -25,9 +25,7 @@ const HomeScreen = () => {
         <div
          className="absolute top-0 left-0 w-full h-full bg-black/70 flex items-center
          justify-center -z-10 shimmer"
-        >
-
-        </div>
+        />
       </div>
     )
   }
