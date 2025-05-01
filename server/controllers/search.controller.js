@@ -40,17 +40,27 @@ const searchMovie = async (req, res) => {
         return res.status(404).send(null)
     }
 
-    await userModel.findByIdAndUpdate(req.user._id, {
+    const user = await userModel.findById(req.user._id);
+
+    // Check if movie with the same ID already exists in searchHistory
+    const exists = user.searchHistory.some(
+      (entry) => entry.id === response.results[0].id
+    );
+    
+    if (!exists) {
+      await userModel.findByIdAndUpdate(req.user._id, {
         $push: {
-            searchHistory: {
-              id: response.results[0].id,
-              image: response.results[0].poster_path,
-              title: response.results[0].title,
-              searchType: "movie",
-              createdAt: new Date()
-            }
+          searchHistory: {
+            id: response.results[0].id,
+            image: response.results[0].poster_path,
+            title: response.results[0].title,
+            searchType: "movie",
+            createdAt: new Date()
+          }
         }
-    })
+      });
+    }
+    
 
     res.status(200).json({ success: true, content: response.results })
 

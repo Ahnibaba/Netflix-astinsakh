@@ -16,9 +16,13 @@ const getTrendingMovie = async(req, res) => {
 } 
 
 const getMovieTrailers = async(req, res) => {
-    const { id } = req.params 
+    const { id } = req.params
+    console.log("id -", id);
+    
     try {
       const data = await fetchFromTMDB(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`)
+      console.log(data.results);
+      
       res.json({ success: true, trailers: data.results })
     } catch (error) {
       if(error.message.includes("404")) {
@@ -53,9 +57,11 @@ const getSimilarMovies = async(req, res) => {
 } 
 
 const getMoviesByCategory = async(req, res) => {
-  const { category } = req.params  
+  const { category } = req.params 
   try {
     const data = await fetchFromTMDB(`https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`)
+   
+    
     res.status(200).json({ success: true, content: data.results })
   } catch (error) {
     console.log("Error in the getMoviesByCategory function: ", error.message)

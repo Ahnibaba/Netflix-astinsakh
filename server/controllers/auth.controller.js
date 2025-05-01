@@ -35,7 +35,7 @@ const signup = async(req, res) => {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
-    const PROFILE_PICS = ["/avatar.png", "/avatar2.png", "/avatar3.png"]
+    const PROFILE_PICS = ["/avatar1.png", "/avatar2.png", "/avatar3.png"]
 
     const image = PROFILE_PICS[Math.floor(Math.random() * PROFILE_PICS.length)]
    
@@ -107,4 +107,16 @@ const logout = async(req, res) => {
   }
 }
 
-export { signup, login, logout }
+const authCheck = async (req, res) => {
+  try {
+    const user = req.user
+    
+    res.status(200).json({ success: true, user })
+  } catch (error) {
+    console.log("Error in authCheck function", error.message)
+    res.status(500).json({ success: false, message: "Server Error" })
+
+  }
+}
+
+export { signup, login, logout, authCheck }
